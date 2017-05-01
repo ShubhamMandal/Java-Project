@@ -4,17 +4,22 @@ import javax.swing.*;
 import java.util.concurrent.TimeUnit;
 import java.lang.Math.*;
 
-/* <applet code="b11" width="600" height="600"> </applet> */
 
-public class b11 extends Applet 
+public class a11v2 extends Applet 
 {
-	int appletHeight = 0, appletWidth = 0, box_width = 0, box_height = 0, spacing = 0, gap = 0, top_padding = 0, left_padding=0, connectedLineHeight=40, step=1, t_sleep=20;
+	
+	Image dbImage;																	//Double buffering image variable
+	Graphics dbg;																	//Double buffering graphics variable
+	
+	int appletHeight = 0, appletWidth = 0, box_width = 0, box_height = 0, spacing = 0, gap = 0, top_padding = 0, left_padding=0;
+	int connectedLineHeight=40, step=1, t_sleep=7;
 	int clicked = 0;
 	Box[] bb;
 	Button b;
 	//Graphics g;
 	public void init()
 	{
+		this.setSize(600,600);														//Setting applet window size
 		setLayout(null);
 		setBackground(Color.WHITE);
 		Dimension appletSize = this.getSize();
@@ -66,6 +71,8 @@ public class b11 extends Applet
 		//swappingLines(bb[2],bb[5],g);
 	}
 
+
+	//-------------------------------------------------------LINE MOVEMENT-------------------------------------------------------------//
 	
 	
 	public void swappingLines(Box b1, Box b2, Graphics g)
@@ -113,6 +120,10 @@ public class b11 extends Applet
 		moveBox(b1, b2.xx, b2.yy, g);
 	}*/
 
+
+	//-------------------------------------------------------BOX MOVEMENT-------------------------------------------------------------//
+		
+	
 	public void moveBox(Box box, int dest_x, int dest_y, Graphics g)
 	{
 		int bx = box.xx;
@@ -233,8 +244,19 @@ public class b11 extends Applet
 		}
 	}
 		
+								//Double Buffering
+			public void update(Graphics g)
+			{
+				dbImage = createImage(600,600);
+				dbg = dbImage.getGraphics();
+				paint(dbg);
+				g.drawImage(dbImage, 0, 0, this);
+			}
+			//private void paint(Graphics dbg) {}
+			private Object createImage(int i, int j) {return null;}
 }
 
+//----------------------------------------------------BOX CLASS-------------------------------------------------//
 
 class Box
 {
@@ -255,5 +277,4 @@ class Box
 		this.yy = yy;
 	}
 }
-
 
